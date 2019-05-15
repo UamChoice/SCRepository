@@ -1,7 +1,4 @@
-﻿-- application.properties文件官方说明
-https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/
-
-
+﻿
 -- git操作手册
 0. git --version
 1. cd /
@@ -49,3 +46,14 @@ git add -A ：是上面两个功能的合集（git add --all的缩写）
 这个命令表示添加备注
 2. git push -u origin master:master 
 提交到Git仓库。这里master为我自己的分支的名称，实际应用中，你要改成自己的分支的名称
+
+
+
+-- STS 配置Git
+（1）配置git@不起作用
+1.In your Eclipse go to Window > Preferences > General > Network Connections > SSH2 (or just type "SSH2" in preferences window filter box).
+2.In "Key Management" tab press "Generate RSA Key..." button. Optionally you can add comment (usually e-mail address) and passphrase to your key. Passphrase will be used during authentication on GitHub.
+3.Copy your generated public key (in a box just below "Generate RSA Key..." button) and add it to your GitHub account.
+4.Press "Save Private Key..." button to save your private RSA key into file. By default keys are stored in SSH2 home directory (see "General" tab).
+（2）改换为http
+I resolved it by selecting http as the protocol and giving my GitHub username and password.
