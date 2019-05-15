@@ -1,4 +1,4 @@
--- application.properties文件官方说明
+﻿-- application.properties文件官方说明
 https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/
 
 
@@ -15,4 +15,29 @@ https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/
 9. cd 项目地址
 10 git init
    Initialized empty Git repository in F:/Program Files/STS/workspace/demo/.git/
-11 
+11 git add .
+12 git commit -m "FirstCommit"
+13 在GitHub获取仓库地址
+   git@github.com:UamChoice/SBRepository.git
+   https://github.com/UamChoice/SBRepository.git
+14 git remote add origin git@github.com:UamChoice/SBRepository.git
+15 git push -u origin master
+   yes
+16 出现 master (fetch first)
+   git pull
+17 git push -u origin master
+18 出现 master (non-fast-forward)
+19 git push -f -u origin master
+   -f强制
+20 GitHub上没有target是因为.gitignore文件中配置了
+
+-- git
+git add命令主要用于把我们要提交的文件的信息添加到索引库中。当我们使用git commit时，git将依据索引库中的内容来进行文件的提交。
+git add . ：他会监控工作区的状态树，使用它会把工作时的所有变化提交到暂存区，包 括文件内容修改(modified)以及新文件(new)，但不包括被删除的文件。
+git add -u ：他仅监控已经被add的文件（即tracked file），他会将被修改的文件提交到暂 存区。add -u 不会提交新文件（untracked file）。（git add --update的缩写）
+git add -A ：是上面两个功能的合集（git add --all的缩写）
+3.3提交已暂存的文件
+1. git commit -m "备注说明"
+这个命令表示添加备注
+2. git push -u origin master:master 
+提交到Git仓库。这里master为我自己的分支的名称，实际应用中，你要改成自己的分支的名称
