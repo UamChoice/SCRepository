@@ -33,9 +33,6 @@
 22 git commit -m "更新mydoc"
 23 git push -u origin master
 
--- STS关联GIT
-右键项目-Team-share,因为已经设置了git，会自己关联
-
 -- git
 git add命令主要用于把我们要提交的文件的信息添加到索引库中。当我们使用git commit时，git将依据索引库中的内容来进行文件的提交。
 git add . ：他会监控工作区的状态树，使用它会把工作时的所有变化提交到暂存区，包 括文件内容修改(modified)以及新文件(new)，但不包括被删除的文件。
@@ -48,6 +45,8 @@ git add -A ：是上面两个功能的合集（git add --all的缩写）
 提交到Git仓库。这里master为我自己的分支的名称，实际应用中，你要改成自己的分支的名称
 
 
+-- STS关联GIT
+右键项目-Team-share,因为已经设置了git，会自己关联
 
 -- STS 配置Git
 （1）配置git@不起作用
@@ -57,3 +56,9 @@ git add -A ：是上面两个功能的合集（git add --all的缩写）
 4.Press "Save Private Key..." button to save your private RSA key into file. By default keys are stored in SSH2 home directory (see "General" tab).
 （2）改换为http
 I resolved it by selecting http as the protocol and giving my GitHub username and password.
+
+-- STS 提交
+1. STS选中文件，commit,可以先仅仅commit
+2. 右键项目push到origin分支
+
+1.也可以直接commit and push
