@@ -1,0 +1,21 @@
+spring: 
+  banner: 
+    location: mybanner.txt
+  thymeleaf:
+    mode: HTML # Template mode to be applied to templates. See also Thymeleaf's TemplateMode enum.
+    prefix: classpath:/templates/ # Prefix that gets prepended to view names when building a URL.
+    suffix: .html # Suffix that gets appended to view names when building a URL.
+    cache: false
+  
+  #http://localhost:8889/static/index.html 访问的是mystatic/index.html
+  #这个设置的作用：访问静态资源文件要加static才行，不加会报错404
+  #mvc: 
+    #static-path-pattern: /static/**  
+  #上面的是访问地址是以什么形式访问（是否加/static），但是访问的资源地址是下面的
+  #优先级顺序为：META/resources > resources > static > public > templates
+  #resources: 
+    #static-locations: classpath:mystatic/
+server: 
+  port: 8889
+  servlet: 
+    context-path: /

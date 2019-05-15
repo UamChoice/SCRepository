@@ -1,0 +1,18 @@
+-- application.properties文件官方说明
+https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/
+
+
+-- git操作手册
+0. git --version
+1. cd /
+2. git config --global user.name "UamChoice"
+3. git config --global user.email "523649919@qq.com"
+4. cd ~/.ssh   可能是没有这个目录的
+5. ssh-keygen -t rsa -C "523649919@qq.com"
+6. cd ~/.ssh   就可以看到公钥和秘钥了
+7. 在GitHub配置 SSH key
+8. cd F:
+9. cd 项目地址
+10 git init
+   Initialized empty Git repository in F:/Program Files/STS/workspace/demo/.git/
+11 
