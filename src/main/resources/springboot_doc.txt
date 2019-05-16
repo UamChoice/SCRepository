@@ -1,2 +1,2 @@
--- application.properties文件官方说明
+-- application.properties文件官方说明,参考用
 https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/html/
