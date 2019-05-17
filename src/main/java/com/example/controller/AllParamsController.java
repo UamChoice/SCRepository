@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,6 +33,8 @@ import io.swagger.annotations.ApiParam;
 @Api(tags="接收参数",description="废弃的")
 public class AllParamsController {
 	
+	private Logger logger = LoggerFactory.getLogger(AllParamsController.class);
+	
 	//相当于@RequestMapping(method = RequestMethod.GET/POST)
 	@GetMapping("/ptPam")
 	@ApiOperation(value="接收普通参数",notes="接收普通参数notes[notes]")
@@ -40,7 +44,7 @@ public class AllParamsController {
 	})
 	public User ptPam(@RequestParam(name="myname",defaultValue="xl",required=false) String name,
 			@RequestParam("myage") int age) {
-		System.out.println("姓名："+name+",年龄："+age);
+		logger.info("姓名："+name+",年龄："+age);
 		return new User(name, age);
 	}
 	
@@ -54,7 +58,7 @@ public class AllParamsController {
 	@ApiOperation(value="接收RESTFUL风格参数",notes="接收RESTFUL风格参数[notes]")
 	public User pathPam(@ApiParam(name="myname",value="姓名") @PathVariable("myname")String name,
 			@ApiParam(name="myage",value="年龄",allowableValues="range[1,55]") @PathVariable("myage")Integer age) {
-		System.out.println("姓名："+name+",年龄："+age);
+		logger.info("姓名："+name+",年龄："+age);
 		return new User(name, age);
 	}
 	
@@ -66,7 +70,7 @@ public class AllParamsController {
 	@PostMapping("/pojoPam")
 	@ApiOperation(value="接收对象参数",notes="接收对象参数[notes],使用@RequestBody",consumes="application/json")
 	public User pojoPam(@RequestBody User user) {
-		System.out.println(user);
+		logger.info(user.toString());
 		return user;
 	}
 	
@@ -78,22 +82,22 @@ public class AllParamsController {
 	@PostMapping("/pojoPamM")
 	@ApiOperation(value="接收对象参数",notes="接收对象参数[notes],使用@ModelAttribute")
 	public User pojoPamM(@ModelAttribute User user) {
-		System.out.println(user);
+		logger.info(user.toString());
 		return user;
 	}
 	
 	@GetMapping("/getHeadPara")
 	@ApiOperation(value="接收Header中的参数",notes="接收Header中的参数[notes]")
 	public String getHeadPara(@RequestHeader("Host") String myhost,@RequestHeader("User-Agent") String agent) {
-		System.out.println(myhost);
-		System.out.println(agent);
+		logger.info(myhost);
+		logger.info(agent);
 		return myhost+""+agent;
 	}
 	
 	@PostMapping("/getCookiePara")
 	@ApiOperation(value="接收Cookie中的参数",notes="接收Cookie中的参数[Cookie: name=XLING; JESSIONID=ADADSADASDSAXAQW1211S12SSA112]")
 	public String getCookiePara(@CookieValue("JESSIONID") String jessionid,@CookieValue("name") String name) {
-		System.out.println(jessionid+","+name);
+		logger.info(jessionid+","+name);
 		return jessionid;
 	}
 }
