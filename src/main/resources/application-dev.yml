@@ -19,3 +19,6 @@ server:
   port: 8889
   servlet: 
     context-path: /
+
+logging: 
+  config: classpath:logback-dev-spring.xml

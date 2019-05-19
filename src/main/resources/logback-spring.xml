@@ -3,50 +3,70 @@
 <!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
 <!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
 <!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
-<configuration  scan="true" scanPeriod="10 seconds">
-	<contextName>demo</contextName>
-    <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
+<configuration  scan="true" scanPeriod="10 seconds" debug="false">
+	<!-- include一个logback自带的的配置文件,比如引入下面console，就不需要自己写consle了，直接<appender-ref ref="CONSOLE" /> -->
+	<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+	
+	<!-- 定义变量后，可以使“${}”来使用变量 -->
+	<property name="APP_Name" value="demo" />
+	<!-- <contextName>用于区分不同应用程序的记录。一旦设置，不能修改。 -->
+	<contextName>${APP_Name}</contextName>
+    
+    <!-- 用于区分不同的环境，适配不同的配置。也可以用分开几个文件的形式来，logback-production.xml,去对应的配置下配置文件名 -->
+    <!-- 如果配置文件用的这个，那么他很根据application选的是spring.profiles.active=dev，自己去用dev的配置 -->
     <springProfile name="prod">    	
-    	<property name="log.path" value="F:/Program Files/STS/demo_logs" />
+    	<property name="log.path" value="F:/Program Files/STS/demo_prod_logs" />
+    	<!-- 生产环境FILE -->
+    	<appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
+	        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	            <!--日志文件输出的文件名-->
+	            <FileNamePattern>${log.path}/demo.log.%d{yyyy-MM-dd}.log</FileNamePattern> 
+	            <!--日志文件保留天数-->
+	            <MaxHistory>30</MaxHistory>
+	        </rollingPolicy>   
+	        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"> 
+	            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
+	            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>   
+	        </encoder> 
+	        <!--日志文件最大的大小-->
+	       <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+	         <MaxFileSize>10MB</MaxFileSize>
+	       </triggeringPolicy>
+	    </appender>
+	    <!-- 举例 -->
+	    <root level="INFO">
+	      <appender-ref ref="CONSOLE" />
+	      <appender-ref ref="FILE" />
+	    </root>
     </springProfile>
     
-    <springProfile name="dev">    	
-    	<property name="log.path" value="F:/Program Files/STS/demo_logs" />
+    <springProfile name="dev">  
+    	<property name="log.path" value="F:/Program Files/STS/demo_dev_logs" />
+    	<!-- 按照每天生成日志文件, 开发环境FILE-->   
+	    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
+	        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	            <!--日志文件输出的文件名-->
+	            <FileNamePattern>${log.path}/demo.log.%d{yyyy-MM-dd}.log</FileNamePattern> 
+	            <!--日志文件保留天数-->
+	            <MaxHistory>30</MaxHistory>
+	        </rollingPolicy>   
+	        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"> 
+	            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
+	            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>   
+	        </encoder> 
+	        <!--日志文件最大的大小-->
+	       <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+	         <MaxFileSize>10MB</MaxFileSize>
+	       </triggeringPolicy>
+	    </appender> 
+	    
+    	<!-- 以下都是举例 -->
+    	<logger name="org.hibernate" level="INFO" />  
+    	<logger name="org.springframework" level="INFO" />  
+    	
+    	<root level="INFO">
+	      <appender-ref ref="FILE" />
+	    </root>
     </springProfile>
-	
-	<!--输出到控制台-->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>info</level>
-        </filter>
-        <encoder>
-            <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
-            <!-- 设置字符集 -->
-            <charset>UTF-8</charset>
-        </encoder>
-    </appender>
-	
-	<!-- 按照每天生成日志文件 -->   
-    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">   
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志文件输出的文件名-->
-            <FileNamePattern>${log.path}/demo.log.%d{yyyy-MM-dd}.log</FileNamePattern> 
-            <!--日志文件保留天数-->
-            <MaxHistory>30</MaxHistory>
-        </rollingPolicy>   
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"> 
-            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符--> 
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>   
-        </encoder> 
-        <!--日志文件最大的大小-->
-       <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-         <MaxFileSize>10MB</MaxFileSize>
-       </triggeringPolicy>
-    </appender> 
     
-	<root level="info">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="FILE" />
-    </root>
 </configuration>
