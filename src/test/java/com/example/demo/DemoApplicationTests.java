@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoApplicationTests {
+	//定义Logger
 	private static final Logger DemoTestLogger = LoggerFactory.getLogger(DemoApplicationTests.class);
 	@Test
 	public void contextLoads() {
