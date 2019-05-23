@@ -62,3 +62,9 @@ I resolved it by selecting http as the protocol and giving my GitHub username an
 2. 右键项目push到origin分支
 
 1.也可以直接commit and push
+
+-- 删除远程分支
+$ git push origin :UamChoice-patch-demo-1
+:冒号后面是要删除的分支，输入该命令弹出登陆窗口，登陆
+To https://github.com/UamChoice/SBRepository.git
+ - [deleted]         UamChoice-patch-demo-1
