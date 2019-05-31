@@ -6,6 +6,9 @@ spring:
     prefix: classpath:/templates/ # Prefix that gets prepended to view names when building a URL.
     suffix: .html # Suffix that gets appended to view names when building a URL.
     cache: false
+  devtools:
+    restart:
+      exclude: static/**
   
   #http://localhost:8889/static/index.html 访问的是mystatic/index.html
   #这个设置的作用：访问静态资源文件要加static才行，不加会报错404
@@ -19,6 +22,8 @@ server:
   port: 8889
   servlet: 
     context-path: /
+  error:
+    path: /error.ttml
 
 logging: 
   config: classpath:logback-dev-spring.xml

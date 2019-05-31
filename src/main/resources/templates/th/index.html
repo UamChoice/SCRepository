@@ -44,9 +44,9 @@
             <br/><br/><br/>
         </div>
     </div>
- 
+ 	
     <div th:inline="text" >
-        <h1>内联[ [ ] ]</h1>
+        <h1>内联[ [ ] ],不通过th:标签就可以读取变量</h1>
         <p>Hello, [[${userName}]]</p>
         <br/>
     </div>
@@ -70,6 +70,7 @@
 </body>
 <script th:inline="javascript">
     var name = [[${userName}]] + ', Sebastian';
-  //  alert(name);
+    // name = LHY, Sebastian
+  	alert(name);
 </script>
 </html>

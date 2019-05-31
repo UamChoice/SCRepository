@@ -28,12 +28,12 @@ public class IndexController {
 	
 	@RequestMapping("/index")
     public String index(ModelMap map) {
-        map.addAttribute("userName", "neo");
+        map.addAttribute("userName", "LHY");
         map.addAttribute("flag", "yes");
         map.addAttribute("users", getUserList());
         map.addAttribute("type", "link");
         map.addAttribute("pageId", "springcloud/2017/09/11");
-        map.addAttribute("img", "aaa.jpg");
+        map.addAttribute("img", "images/star.png");
         map.addAttribute("count", 12);
         map.addAttribute("date", new Date());
         return "th/index";
