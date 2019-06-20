@@ -1,6 +1,6 @@
 spring: 
   banner: 
-    location: mybanner.txt
+    location: mybanner.txt  #默认banner.txt
   thymeleaf:
     mode: HTML # Template mode to be applied to templates. See also Thymeleaf's TemplateMode enum.
     prefix: classpath:/templates/ # Prefix that gets prepended to view names when building a URL.
@@ -23,6 +23,7 @@ server:
   servlet: 
     context-path: /
   error:
+    include-exception: true
     path: /error.ttml
 
 logging: 

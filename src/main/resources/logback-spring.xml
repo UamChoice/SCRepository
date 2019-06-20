@@ -60,7 +60,7 @@
 	       </triggeringPolicy>
 	    </appender> 
 	    
-    	<!-- 以下都是举例 -->
+    	<!-- 以下都是举例,并未真正使用 -->
     	<logger name="org.hibernate" level="INFO" />  
     	<logger name="org.springframework" level="INFO" />  
     	
