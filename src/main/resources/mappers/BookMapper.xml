@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	映射文件中的namespace是用于绑定Dao接口的，即面向接口编程。
+	当你的namespace绑定接口后，你可以不用写接口实现类，mybatis会通过该绑定自动帮你找到对应要执行的SQL语句
+	
+	com.example.dto.Book
+ -->
+<mapper namespace="com.example.mapper.BookMapper">
+  <sql id="books_cols" >id,book_title,book_price,publish_date</sql>
+  
+  <!-- resultMap标签用于配置查询字段与java对象属性的映射关系,如果区别仅仅是驼峰，可用开启驼峰替换下面 -->
+  <resultMap id="bookMap" type="com.example.dto.Book">
+	<id property="id" column="id"/>
+	<result property="bookTitle" column="book_title"/>
+	<result property="bookPrice" column="book_price"/>
+	<result property="publishDate" column="publish_date"/>
+  </resultMap>
+  
+  <!-- resultType="com.example.dto.Book" 或者resultType="Book" 都可以，是因为
+  	1.开启了驼峰  mapUnderscoreToCamelCase
+  	2.别名的存在  typeAliasesPackage
+   -->
+  <select id="selectById" parameterType="int" resultType="Book">
+    select 
+    <include refid="books_cols"></include>
+     from books where id = #{id}
+  </select>
+  
+  <!-- like实现方式
+  	   1.concat连接
+       2.外部传入时就加上% -->
+  <select id="selectByTitle" parameterType="string" resultMap="bookMap">
+    select 
+    <include refid="books_cols" />
+     from books where book_title like CONCAT('%',#{title},'%')
+  </select>
+  
+  <!-- 3.使用bind -->
+  <select id="selectByTitle1" parameterType="string" resultMap="bookMap">
+    <if test="_parameter != null and _parameter !=''">
+    	<bind name="pattern_title" value="'%'+_parameter+'%'"/>
+    </if>
+    select * from books 
+    <where>
+      book_title like #{pattern_title}
+    </where>
+  </select>
+  
+  <!-- 多个条件，parameterType="map" 或者 ="hashmap"，#{title} title为map的key值 -->
+  <select id="selectByTitlePrice" parameterType="map"  resultType="Book">
+	SELECT
+	<include refid="books_cols"></include>
+	FROM books
+	<!-- prefix的作用是把WHERE放条件的前面，suffixOverrides此时的作用是去除最后一个AND -->
+	<trim prefix="WHERE" suffixOverrides="AND"> 
+		<if test="book_title != null">book_title like #{book_title} AND</if>
+        <if test="book_price != null">book_price <![CDATA[ <= ]]> #{book_price} AND</if>
+	</trim>
+  </select>
+  
+  <!-- Oracle插入 -->
+  <insert id="insertBookO" databaseId="oracle">
+    <selectKey keyProperty="id" order="BEFORE" resultType="Integer">
+        select books_seq.nextval from dual
+    </selectKey>
+    insert into books(book_title,book_price,publish_date) 
+    values(#{bookTitle}, #{bookPrice}, #{publishDate})
+  </insert>
+  
+  <!-- Mysql插入 -->
+  <insert id="insertBook" parameterType="Book" 
+  		  useGeneratedKeys="true" keyProperty="id">
+	  INSERT INTO books(book_title,book_price,publish_date) 
+	  VALUES (#{bookTitle}, #{bookPrice}, #{publishDate})
+  </insert>
+  
+  <!-- 批量插入 -->
+  <insert id="insertBookBatch" parameterType="java.util.List" >
+	  INSERT INTO books(book_title,book_price,publish_date) values
+	  <!-- 1.Available parameters are [collection, list],collection必须指定为list，因为默认是map
+	       2.或者利用注解@Param("booksList")指定我们的入参名称,collection="booksList" 
+	       item是可以自由定义的
+	   -->
+	  <foreach collection="booksList" item="book"  separator="," close=";">
+            (#{book.bookTitle}, #{book.bookPrice}, #{book.publishDate})
+      </foreach>
+  </insert>
+  
+  <!-- 
+  	prefix	给sql语句拼接的前缀
+	suffix	给sql语句拼接的后缀
+	prefixesToOverride	去除sql语句前面的关键字或者字符，该关键字或者字符由prefixesToOverride属性指定，假设该属性指定为”AND”，当sql语句的开头为”AND”，trim标签将会去除该”AND”
+	suffixesToOverride	去除sql语句后面的关键字或者字符，该关键字或者字符由suffixesToOverride属性指定 -->
+  <!-- update books set book_title= ?, book_price= ? WHERE id = ? -->
+  <update id="update" parameterType="Book">
+        update books
+      <trim prefix="set" suffixOverrides=",">
+          <if test="bookTitle!=null">book_title= #{bookTitle},</if>
+          <if test="bookPrice!=null">book_price= #{bookPrice},</if>
+      </trim>
+      <where>id = #{id}</where>
+  </update>
+  
+  <!-- 
+  	  collection :collection属性的值有三个分别是list、array、map三种，分别对应的参数类型为：List、数组、map集合
+　　　　			  也可以@Param去定义
+	  item ： 表示在迭代过程中每一个元素的别名
+　　　　index ：表示在迭代过程中每次迭代到的位置（下标）
+　　　　open ：前缀
+　　　　close ：后缀
+　　　　separator ：分隔符，表示迭代时每个元素之间以什么分隔
+   -->
+  <!-- delete from books WHERE ID in ( ? , ? ),如果提示SQL语法错误，则复制官网的则可  -->
+  <delete id="batchDelete" parameterType="java.util.List">
+    delete from books WHERE ID in
+    <!-- 或者collection=list -->
+	<foreach item="item" index="index"  collection="booksDelList"
+      open="(" separator="," close=")">
+        #{item}
+    </foreach>
+  </delete>
+</mapper>
