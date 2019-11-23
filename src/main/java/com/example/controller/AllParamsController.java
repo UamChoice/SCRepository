@@ -89,6 +89,17 @@ public class AllParamsController {
 		logger.info(user.toString());
 		return user;
 	}
+
+	/**
+	 * 接收增强类设置的全局参数，XLControllerAdvice中设置
+	 * @return
+	 */
+	@GetMapping("/advicePara")
+	@ApiOperation(value="接收增强类设置的参数",notes="XLControllerAdvice中设置,也可以通过ModelMap modelMap.get('demo_author')获取")
+	public String advicePara(@ModelAttribute("demo_author") String author) {
+		logger.info(author);
+		return author;
+	}
 	
 	@GetMapping("/getHeadPara")
 	@ApiOperation(value="接收Header中的参数",notes="接收Header中的参数[notes]")

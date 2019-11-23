@@ -6,12 +6,14 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.example.dto.Book;
+import org.springframework.stereotype.Component;
 
 /**   
 * @Description： 通过Service调用的，一个走标准MVC的
 * @author： XL_FUTURE   
 * @date： 2019年6月10日 下午10:47:17 
 */
+@Component
 @Mapper
 public interface BookMapper {
 	Book selectById(int id);

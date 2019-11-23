@@ -7,6 +7,9 @@ package com.example.controller;
 
 import java.util.List;
 
+import com.example.annotation.LoginAnno;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,13 +23,17 @@ import com.example.service.BookService;
 @RestController
 @RequestMapping("/book")
 public class BookController {
+	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+
 	@Autowired
 	public BookService bookService;
 	
 	@RequestMapping("/selectById/{id}")
+	@LoginAnno(name="登陆拦截器",values = {"hello","world"})
 	//http://localhost:8889/book/selectById/14
 	public Book selectById(@PathVariable("id") int id) {
 		// TODO Auto-generated method stub
+		logger.info("GoInto BookController selectById");
 		return bookService.selectById(id);
 	}
 

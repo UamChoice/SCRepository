@@ -11,5 +11,14 @@
 	  <span class="sr-only">Error:</span>
 	  This is a error html
 	</div>
+	<div class="alert alert-danger" role="alert">
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">ErrorCode:</span>
+		<p th:text="${code}">exp code</p>
+
+		<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+		<span class="sr-only">ErrorMessage:</span>
+		<p th:text="${msg}">exp msg</p>
+	</div>
 </body>
 </html>

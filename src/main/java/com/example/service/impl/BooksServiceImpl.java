@@ -2,6 +2,9 @@ package com.example.service.impl;
 
 import java.util.List;
 
+import com.example.config.XLAop;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,50 +19,52 @@ import com.example.service.BookService;
 */
 @Service
 public class BooksServiceImpl implements BookService {
+	private static final Logger logger = LoggerFactory.getLogger(BooksServiceImpl.class);
 
 	@Autowired
-	private BookMapper booksMapper;
+	private BookMapper bookMapper;
 	
 	@Override
 	public Book selectById(int id) {
 		// TODO Auto-generated method stub
-		return booksMapper.selectById(id);
+		logger.info("GoInto serviceImpl selectByid");
+		return bookMapper.selectById(id);
 	}
 
 	@Override
 	public List<Book> selectByTitle(String title) {
 		// TODO Auto-generated method stub
-		return booksMapper.selectByTitle(title);
+		return bookMapper.selectByTitle(title);
 	}
 
 	@Override
 	public List<Book> selectByTitlePrice(String title, double price) {
 		// TODO Auto-generated method stub
-		return booksMapper.selectByTitlePrice(title, price);
+		return bookMapper.selectByTitlePrice(title, price);
 	}
 
 	@Override
 	public int insertBook(Book book) {
 		// TODO Auto-generated method stub
-		return booksMapper.insertBook(book);
+		return bookMapper.insertBook(book);
 	}
 
 	@Override
 	public int insertBookBatch(List<Book> bookList) {
 		// TODO Auto-generated method stub
-		return booksMapper.insertBookBatch(bookList);
+		return bookMapper.insertBookBatch(bookList);
 	}
 
 	@Override
 	public int update(int id) {
 		// TODO Auto-generated method stub
-		return booksMapper.update(id);
+		return bookMapper.update(id);
 	}
 
 	@Override
 	public int batchDelete(List<Integer> list) {
 		// TODO Auto-generated method stub
-		return booksMapper.batchDelete(list);
+		return bookMapper.batchDelete(list);
 	}
 
 }

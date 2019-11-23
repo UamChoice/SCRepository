@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 /**   
 * @Description： Mysql books实体类
-* 如果不开启驼峰mapUnderscoreToCamelCase，会输出：Book(id=2, bookTitle=null, bookPrice=0.0, publishDate=null)
+* 如果不开启驼峰mapUnderscoreToCamelCase又不在Mapper Xml中配置Map，那么就会转换为对象：Book(id=2, bookTitle=null, bookPrice=0.0, publishDate=null)
 * @author： XL_FUTURE   
 * @date： 2019年5月26日 下午4:30:33 
 */

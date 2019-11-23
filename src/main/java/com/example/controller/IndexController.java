@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.example.annotation.LoginAnno;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,13 +20,22 @@ import com.example.dto.User;
 
 @Controller
 public class IndexController {
-	
+
+    /**
+     * 主页
+     * @return
+     */
 	@RequestMapping("/welcome")
 	public ModelAndView index() {
 		ModelAndView mav = new ModelAndView("index");
 		return mav;
 	}
-	
+
+    /**
+     * 测试templates模板，地址resources\templates\th\index.html
+     * @param map
+     * @return
+     */
 	@RequestMapping("/index")
     public String index(ModelMap map) {
         map.addAttribute("userName", "LHY");
@@ -38,7 +48,6 @@ public class IndexController {
         map.addAttribute("date", new Date());
         return "th/index";
     }
- 
  
     private List<User> getUserList(){
         List<User> list=new ArrayList<User>();

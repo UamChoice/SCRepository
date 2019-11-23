@@ -3,7 +3,7 @@
 <configuration  scan="true" scanPeriod="10 seconds" debug="false">
 	<property name="APP_Name" value="demo" />
 	<property name="log.path" value="F:/Program Files/STS/logs/demo_dev_logs" />
-	<property name="color_print" value="%black(控制台-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)"></property>
+	<property name="color_print" value="%white(控制台-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger) - %cyan(%msg%n)"></property>
 	<property name="print" value="%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"></property>
 	
 	<contextName>${APP_Name}</contextName>
@@ -75,7 +75,7 @@
 	
 	<!-- Spring Boot 2.1 以后 使用了 Spring Framework 5.1, 而 Spring Framework 5.1 对日志做了较大的改动。现在使用 INFO 级别记录的信息非常少，DEBUG 级别提供了更多信息，但不详细。只有 TRACE 级别才会提供详细信息 -->
 	<!-- 打印Mapping -->
-	<logger name="org.springframework.web" level="TRACE" />
+	<logger name="org.springframework.web" level="INFO" />
 	
 	<!-- 也是<logger>元素，但是它是根logger。只有一个level属性，已经被命名为"root" -->
 	<!-- 根级别目录是info，如果是error那么将没有任何输出 -->

@@ -39,12 +39,12 @@ spring:
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
       # yml 或者 properties 配置了，就不需要配置configuration的servlet和filter了 .http://localhost:8889/druid/index.html
       # WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
-      web-stat-filter: 
+      web-stat-filter:
         enabled: true #是否启用StatFilter默认值false
         url-pattern: /*
         exclusions: /druid/*
       # StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
-      stat-view-servlet: 
+      stat-view-servlet:
         enabled: true #是否启用StatViewServlet（监控页面）默认值为false（考虑到安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
         url-pattern: /druid/*
         reset-enable: false
@@ -52,6 +52,9 @@ spring:
         login-password: 123456
         allow: 127.0.0.1
         deny: 192.168.1.73
+  redis:
+    host: 192.168.30.128
+    port: 6379
 #mybatis
 mybatis:
   # 实体类扫描
@@ -75,9 +78,9 @@ server:
   port: 8889
   servlet: 
     context-path: /
-  error:
-    include-exception: true
-    path: /error.ttml
+#  error:
+#    include-exception: true
+#    path: /error
 
 logging: 
   config: classpath:logback-dev-spring.xml

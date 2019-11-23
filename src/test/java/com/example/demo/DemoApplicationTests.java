@@ -3,6 +3,7 @@ package com.example.demo;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.tools.RedisUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -19,7 +20,9 @@ import com.example.tools.PropertiesReadTool;
 @SpringBootTest
 public class DemoApplicationTests {
 	private static final Logger DemoTestLogger = LoggerFactory.getLogger(DemoApplicationTests.class);
-	
+	@Autowired
+	RedisUtil redisUtil;
+
 	@Test
 	public void contextLoads() {
 		testErrLog();
@@ -33,5 +36,10 @@ public class DemoApplicationTests {
 			DemoTestLogger.error(e.toString());
 			e.printStackTrace();
 		}
+	}
+
+	@Test
+	public void testRedis(){
+		System.out.println(redisUtil.get("key1"));
 	}
 }
