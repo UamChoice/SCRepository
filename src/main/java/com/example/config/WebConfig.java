@@ -1,8 +1,9 @@
 package com.example.config;
 
+import com.example.aop.TimerInterceptor;
+import com.example.aop.WebInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -13,11 +14,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new XLInterceptor())
+        registry.addInterceptor(new TimerInterceptor())
                 .addPathPatterns("/book/**")
                 .excludePathPatterns("/welcome");
 
-        registry.addInterceptor(new XLInterceptor2())
+        registry.addInterceptor(new WebInterceptor())
                 .addPathPatterns("/**")
                 .excludePathPatterns("/validate/**");
     }

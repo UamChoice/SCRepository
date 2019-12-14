@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 * @author： XL_FUTURE   
 * @date： 2019年6月10日 下午10:47:17 
 */
-@Component
 @Mapper
 public interface BookMapper {
 	Book selectById(int id);

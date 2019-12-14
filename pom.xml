@@ -119,6 +119,11 @@
 			<version>${commons-codec.version}</version>
 		</dependency>
 		<!-- commons工具核心包 end -->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -127,14 +132,21 @@
 				<directory>${project.basedir}/lib</directory>
 				<targetPath>BOOT-INFO/lib</targetPath>
 				<includes>
+					<!-- **/*这样的写法，是为了保证各级子目录下的该类资源文件都被打包 -->
 					<include>**/*.jar</include>
 				</includes>
+				<!-- 如是true,include中的文件中有形如：@project.description@,会替换成properties中对应变量的文字 -->
+				<!-- <filtering>true</filtering> -->
 			</resource>
 		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<!-- 项目中有多个包含main启动方法的类时，指定启动类 -->
+					<mainClass>com.example.DemoApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

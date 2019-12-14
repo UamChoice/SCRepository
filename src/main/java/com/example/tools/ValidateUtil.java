@@ -1,5 +1,6 @@
 package com.example.tools;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -7,6 +8,7 @@ import org.springframework.validation.ObjectError;
 import java.util.List;
 
 @Component
+@Slf4j
 public class ValidateUtil {
 
     public String getAllErrorMsg(BindingResult bindingResult){
@@ -17,6 +19,7 @@ public class ValidateUtil {
                 errorMsg.append(error.getDefaultMessage() + ";");
             }
         });
+        //log.info("错误信息：{}",errorMsg.toString());
         return errorMsg.toString();
     }
 }

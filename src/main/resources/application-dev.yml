@@ -63,6 +63,7 @@ mybatis:
   mapper-locations: classpath:mappers/*.xml
   # 开启驼峰匹配
   configuration:
+    # org.apache.ibatis.reflection.MetaClass#findProperty 的useCamelCaseMapping是代表是否开启驼峰转换
     map-underscore-to-camel-case: true
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   

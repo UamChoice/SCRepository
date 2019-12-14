@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.aop;
 
 import com.example.dto.validate.People;
 import org.aspectj.lang.JoinPoint;
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * 基于注解的AOP
- .XLInterceptor - -------XLInterceptor Order[1] 拦截器 preHandle-------，时间20191002
- .XLInterceptor2 - -------XLInterceptor Order[2] 拦截器 preHandle-------，时间20191002
+ .TimerInterceptor - -------TimerInterceptor Order[1] 拦截器 preHandle-------，时间20191002
+ .WebInterceptor - -------TimerInterceptor Order[2] 拦截器 preHandle-------，时间20191002
  .XLAop - AOP @Around aspet around...（1）
  .XLAop - AOP @Before aspet before...
  BookController - GoInto BookController selectById
@@ -26,10 +26,10 @@ import org.springframework.stereotype.Component;
  .XLAop - AOP @Around aspet around...（2）
  .XLAop - AOP @After aspet after...
  .XLAop - AOP @AfterReturning aspet afterreturning...
- .XLInterceptor2 - -------XLInterceptor Order[2] 拦截器 postHandle-------
- .XLInterceptor - -------XLInterceptor Order[1] 拦截器 postHandle-------
- .XLInterceptor2 - -------XLInterceptor Order[2] 拦截器 afterCompletion-------
- .XLInterceptor - -------XLInterceptor Order[1] 拦截器 afterCompletion-------
+ .WebInterceptor - -------TimerInterceptor Order[2] 拦截器 postHandle-------
+ .TimerInterceptor - -------TimerInterceptor Order[1] 拦截器 postHandle-------
+ .WebInterceptor - -------TimerInterceptor Order[2] 拦截器 afterCompletion-------
+ .TimerInterceptor - -------TimerInterceptor Order[1] 拦截器 afterCompletion-------
  */
 @Component
 @Aspect

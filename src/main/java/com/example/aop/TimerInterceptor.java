@@ -1,4 +1,4 @@
-package com.example.config;
+package com.example.aop;
 
 import com.example.annotation.LoginAnno;
 import org.slf4j.Logger;
@@ -12,17 +12,20 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.logging.Handler;
 
+/**
+ * 拦截器两种方式：
+ * 1.implements HandlerInterceptor
+ * 2.extends HandlerInterceptorAdapter,可以按需对方法进行覆盖override，而不用每个方法都实现
+ */
 @Component
 @Order(1)
-public class XLInterceptor implements HandlerInterceptor {
-    private String name = "XLInterceptor Order[1] 拦截器";
+public class TimerInterceptor implements HandlerInterceptor {
+    private String name = "TimerInterceptor Order[1] 拦截器";
     private static final NamedThreadLocal<Long> startTimeThreadLocal = new NamedThreadLocal<>("record-time");
-    private static final Logger logger = LoggerFactory.getLogger(XLInterceptor.class);
+    private static final Logger logger = LoggerFactory.getLogger(TimerInterceptor.class);
     /**
      * 预处理回调方法，实现处理器的预处理
      * 返回值：true表示继续流程；false表示流程中断，不会继续调用其他的拦截器或处理器
@@ -31,8 +34,10 @@ public class XLInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String format = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
         logger.info("-------"+ name +" preHandle-------，时间{}",format);
-        long beginTime = System.currentTimeMillis();    //1、开始时间
-        startTimeThreadLocal.set(beginTime);    //线程绑定变量（该数据只有当前请求的线程可见）
+        //1、开始时间
+        long beginTime = System.currentTimeMillis();
+        //线程绑定变量（该数据只有当前请求的线程可见）
+        startTimeThreadLocal.set(beginTime);
         LoginAnno authPassport = null;
 
         //handler.getClass() = HandlerMethod.class
@@ -41,15 +46,17 @@ public class XLInterceptor implements HandlerInterceptor {
                 authPassport = ((HandlerMethod) handler).getMethodAnnotation(LoginAnno.class);
             }
             //没有声明需要权限,或者声明不验证权限
-            if(authPassport==null){
+            if(authPassport == null){
                 return true;
             }else{
                 //在这里实现自己的权限验证逻辑
                 logger.info("获取注解类型:{}，名字:{},值:{}",authPassport.getClass(),authPassport.name(),authPassport.values());
-                if(true){//如果验证成功返回true（这里直接写false来模拟验证失败的处理）
+                //如果验证成功返回true（这里直接写false来模拟验证失败的处理）
+                if(true){
                     logger.info("执行权限校验了");
                     return true;
-                }else{//如果验证失败
+                //如果验证失败
+                }else{
                     //返回到登录界面
                     //logger.info("权限校验对了");
                     //response.sendRedirect("account/login");
@@ -69,15 +76,18 @@ public class XLInterceptor implements HandlerInterceptor {
                                 HttpServletResponse arg1, Object arg2, Exception arg3)
             throws Exception {
         logger.info("-------"+ name +" afterCompletion-------");
-
-        long endTime = System.currentTimeMillis();  // 2、结束时间
-        long beginTime = startTimeThreadLocal.get();    // 得到线程绑定的局部变量（开始时间）
-        long consumeTime = endTime - beginTime; // 3、消耗的时间
-//        if (consumeTime > 500) {  // 此处认为处理时间超过500毫秒的请求为慢请求
-//          // TODO 记录到日志文件
+        // 2、结束时间
+        long endTime = System.currentTimeMillis();
+        // 得到线程绑定的局部变量（开始时间）
+        long beginTime = startTimeThreadLocal.get();
+        // 3、消耗的时间
+        long consumeTime = endTime - beginTime;
+        // 此处认为处理时间超过500毫秒的请求为慢请求
+        //if (consumeTime > 500) {
+            //记录到日志文件
             logger.info(String.format("XLInterceptor拦截器afterCompletion  %s consume %d millis",
                     request.getRequestURI(), consumeTime));
-//        }
+        //}
     }
 
     /**
