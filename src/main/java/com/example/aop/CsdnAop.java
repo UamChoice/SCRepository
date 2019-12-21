@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Aspect
 public class CsdnAop {
 
-    private final String ExpGetResultDataPonit = "execution(* com.haiyang.onlinejava.complier.service.TestService.getResultData(..))";
+    private final String ExpGetResultDataPonit = "execution(* com.example.controller..*.*(..))";
 
     //定义切入点,拦截servie包其子包下的所有类的所有方法
     //@Pointcut("execution(* com.haiyang.onlinejava.complier.service..*.*(..))")
