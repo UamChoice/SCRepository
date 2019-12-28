@@ -6,11 +6,15 @@
 	<groupId>com.example</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>dev-nosql</module>
+		<module>java-base</module>
+		<module>dev-web</module>
+	</modules>
+    <packaging>pom</packaging>
 
 	<name>demo</name>
 	<description>Demo project for Spring Boot</description>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -19,141 +23,14 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<swagger2.version>2.2.2</swagger2.version>
 		<fastjson.version>1.2.54</fastjson.version>
-		<lombok.version>1.18.8</lombok.version>
-		<commons-lang3.version>3.4</commons-lang3.version>
-		<commons-codec.version>1.10</commons-codec.version>
-		<druid-spring-boot>1.1.17</druid-spring-boot>
-		<mybatis-spring-boot.version>2.0.1</mybatis-spring-boot.version>
 	</properties>
 
-	<!-- 设置仓库地址 -->
-	<!-- <repositories>
-		阿里私服
-		<repository>
-			<id>aliyunmaven</id>
-			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-		</repository>
-	</repositories> -->
-
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-redis</artifactId>
-		</dependency>
-
-		<!-- swagger依赖 -->
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger2</artifactId>
-			<version>${swagger2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.springfox</groupId>
-			<artifactId>springfox-swagger-ui</artifactId>
-			<version>${swagger2.version}</version>
-		</dependency>
-		<!-- 热部署 -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<!-- 启用模板  -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-thymeleaf</artifactId>
-		</dependency>
-		<!-- mybatis核心包start -->
-		<dependency>
-			<groupId>org.mybatis.spring.boot</groupId>
-			<artifactId>mybatis-spring-boot-starter</artifactId>
-			<version>${mybatis-spring-boot.version}</version>
-		</dependency>
-		<!-- mysql驱动核心包 start -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<!-- druid核心包 start,包含druid -->
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>${druid-spring-boot}</version>
-		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>${fastjson.version}</version>
 		</dependency>
-		<!-- lombok -->
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${lombok.version}</version>
-		</dependency>
-		<!-- commons工具核心包 start -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>${commons-codec.version}</version>
-		</dependency>
-		<!-- commons工具核心包 end -->
-
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.kafka</groupId>
-			<artifactId>kafka-clients</artifactId>
-			<version>0.11.0.0</version>
-		</dependency>
 	</dependencies>
-
-	<build>
-		<resources>
-			<resource>
-				<directory>${project.basedir}/lib</directory>
-				<targetPath>BOOT-INFO/lib</targetPath>
-				<includes>
-					<!-- **/*这样的写法，是为了保证各级子目录下的该类资源文件都被打包 -->
-					<include>**/*.jar</include>
-				</includes>
-				<!-- 如是true,include中的文件中有形如：@project.description@,会替换成properties中对应变量的文字 -->
-				<!-- <filtering>true</filtering> -->
-			</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<!-- 项目中有多个包含main启动方法的类时，指定启动类 -->
-					<mainClass>com.example.DemoApplication</mainClass>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
