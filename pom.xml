@@ -10,6 +10,9 @@
         <module>dev-nosql</module>
 		<module>java-base</module>
 		<module>dev-web</module>
+		<module>cloud-config</module>
+        <module>cloud-user</module>
+		<module>cloud-eureka</module>
 	</modules>
     <packaging>pom</packaging>
 
@@ -18,8 +21,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.4.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>2.0.9.RELEASE</version>
 	</parent>
 
 	<properties>
@@ -33,4 +35,16 @@
 			<version>${fastjson.version}</version>
 		</dependency>
 	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Finchley.SR2</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 </project>

@@ -1,0 +1,27 @@
+# 配置中心客户端
+server:
+  port: 8881
+spring:
+  application:
+    name: cloud-user
+  cloud:
+    config:
+      uri: http://localhost:8900/     #这就是我们config server的一个地址
+      name: cloud-user-name           #这是我们要读取的配置文件名 对应获取规则的{application}
+      profile: dev        #这个是要获取的环境 对应的便是{profile}
+#      label: master       #这个就是获取的节点 对应的是{label}
+#      discovery:
+#        enabled: true     #开启配置服务发现
+#        service-id: test  #配置服务实例名称
+
+### 去掉注释，需放开@EnableEurekaClient注解
+#eureka:
+#  client:
+#    serviceUrl:
+#        defaultZone: http://localhost:3000/eureka/  #eureka服务端提供的注册地址 参考服务端配置的这个路径
+#  instance:
+#    instance-id: user-1     #此实例注册到eureka服务端的唯一的实例ID
+#    prefer-ip-address: true #是否显示IP地址
+#    leaseRenewalIntervalInSeconds: 1    #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒 (与下面配置的单位都是秒)
+#    leaseExpirationDurationInSeconds: 3 #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒
+

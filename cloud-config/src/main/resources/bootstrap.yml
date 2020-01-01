@@ -1,0 +1,49 @@
+server:
+  port: 8900
+#配置中心服务端
+spring:
+  application:
+    name: cloud-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://gitee.com/lhygits/server-config.git
+          #Configserver会在 Git仓库根目录、 foo子目录，以及所有以 bar开始的子目录中查找配置文件。
+          search-paths: foo,cloud*
+          #启动时就clone仓库到本地，默认是在配置被首次请求时，config server才会clone git仓库
+          clone-on-start: true
+          username: 837652065@qq.com
+          password: git213456
+      label: master
+
+### 去掉注释，需放开@EnableEurekaClient注解
+#eureka:
+#  client:
+#    serviceUrl:
+#      #eureka服务端提供的注册地址 参考服务端配置的这个路径
+#      defaultZone: http://localhost:3000/eureka/
+#  instance:
+#    #此实例注册到eureka服务端的唯一的实例ID
+#    instance-id: config-1
+#    #是否显示IP地址
+#    prefer-ip-address: true
+#    #eureka客户需要多长时间发送心跳给eureka服务器，表明它仍然活着,默认为30 秒 (与下面配置的单位都是秒)
+#    leaseRenewalIntervalInSeconds: 1
+#    #Eureka服务器在接收到实例的最后一次发出的心跳后，需要等待多久才可以将此实例删除，默认为90秒
+#    leaseExpirationDurationInSeconds: 3
+
+#actuator配置
+management:
+  server:
+    port: 8901
+  #修改访问路径  2.0之前默认是/   2.0默认是 /actuator  可以通过这个属性值修改
+  endpoints:
+    web:
+      base-path: /actuator
+      #开放所有页面节点  默认只开启了health、info两个节点
+      #management.endpoints.web.exposure.include=*
+      exposure.include: refresh,info,health
+    #显示健康具体信息  默认不会显示详细信息
+    health:
+      show-details: always

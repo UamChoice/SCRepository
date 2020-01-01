@@ -1,20 +1,18 @@
 package com.example.controller;
 
-import java.io.UnsupportedEncodingException;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.example.tools.PropertiesListenerConfig;
+import com.example.tools.PropertiesReadTool;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.tools.PropertiesListenerConfig;
-import com.example.tools.PropertiesReadTool;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**   
 * @Description： 4种方式读取properties文件
@@ -22,9 +20,9 @@ import io.swagger.annotations.ApiOperation;
 * @date： 2019年6月19日 下午9:40:57 
 */
 @RestController
-@RequestMapping("/tools")
+@RequestMapping("/read_value")
 @Api(tags="读取properties文件参数")
-public class PropertyToolsController {
+public class PropertyReadController {
 	@Autowired
     private PropertiesReadTool propertiesReadTool;
 	
@@ -81,6 +79,12 @@ public class PropertyToolsController {
     
     /**
      * 第四种方式：通过注册监听器(`Listeners`) + `PropertiesLoaderUtils`的方式
+     *
+     * Application中main方法添加
+     * //SpringApplication application = new SpringApplication(WebApplication.class);
+     * // 第四种读取properties方式：注册监听器
+     * //application.addListeners(new PropertiesListener("read_pro.properties"));
+     * //application.run(args);
      */
     @RequestMapping("/listener")
     @ApiOperation(value="使用监听器接收参数",notes="必须要ApplicationListener以及application.addListeners")
